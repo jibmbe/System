@@ -1,51 +1,50 @@
 /* static/styles.css */
 
+/* styles.css */
+/* Add this CSS to your existing stylesheet or create a new one */
+
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .location-request-container {
+    background-color: #333; /* Set the background color to dark gray */
+    color: #fff; /* Set text color to white */
+    font-family: Arial, sans-serif; /* Choose an appropriate font */
+}
+
+.dashboard-container {
     max-width: 800px;
-    margin: 50px auto;
+    margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  form {
+}
+
+h2 {
+    color: orange; /* Set heading color to orange */
+}
+
+.user-profile {
     margin-bottom: 20px;
-  }
-  
-  button {
-    background-color: #3498db;
+}
+
+.user-profile img {
+    max-width: 100px;
+    border-radius: 50%; /* Make the avatar image round */
+    margin-bottom: 10px;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: orange;
     color: #fff;
     padding: 10px 20px;
     border: none;
     cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #2980b9;
-  }
-  
-  .nearby-places,
-  .live-events {
-    margin-top: 20px;
-  }
-  
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  li {
-    margin-bottom: 10px;
-  }
-  
-  p {
-    color: #555;
-  }
-  
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #ff8c00; /* Darker shade of orange on hover */
+}
+
+
+/* Add specific styles for your orange buttons or any other elements */
