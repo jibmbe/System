@@ -1,0 +1,112 @@
+<!-- dashboard.html -->
+
+
+<!-- dashboard.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #1a1a1a;
+        color: #fff;
+        font-family: Arial, sans-serif;
+    }
+
+    .dashboard-container {
+        max-width: 600px;
+        margin: 20px auto; /* Adjusted margin */
+        text-align: center;
+        padding: 20px; /* Added padding */
+        border-radius: 10px;
+        background-color: #333;
+    }
+
+    h2 {
+        margin-top: 0; /* Removed margin-top */
+    }
+
+    .user-profile {
+        margin-top: 10px; /* Adjusted margin */
+        margin-bottom: 20px; /* Adjusted margin */
+    }
+
+    .avatar-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid #fff;
+        margin-bottom: 10px;
+    }
+
+    .bio-container {
+        margin-top: 20px;
+        border-radius: 10px;
+        padding: 10px;
+        background-color: #333;
+    }
+
+    .bio-container p {
+        margin: 5px 0;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+
+    button {
+        background-color: #ff8c00;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    input, textarea {
+        padding: 5px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<script>
+    $(document).ready(function() {
+        // Initialize emojionearea for the bio textarea
+        $("#id_bio").emojioneArea();
+    });
+</script>
+
+<div class="dashboard-container">
+    <h2>Dashboard</h2>
+    <div class="user-profile">
+        {% if user_profile.avatar and user_profile.avatar.url %}
+            <img src="{{ user_profile.avatar.url }}" alt="Avatar" class="avatar-image">
+        {% else %}
+            <p>No avatar available</p>
+        {% endif %}
+        {% if avatar_form.avatar and avatar_form.avatar.value %}
+            <p>Currently: {{ user_profile.avatar.url }}</p>
+        {% endif %}
+    </div>
+
+    <form method="post" enctype="multipart/form-data" action="{% url 'upload_avatar' %}">
+        {% csrf_token %}
+        {{ avatar_form }}
+        <button type="submit">Upload Avatar</button>
+    </form>
+
+    <div class="bio-container">
+        <p>Change: {{ avatar_form.avatar }}</p>
+        <p>Bio: <textarea id="id_bio" name="bio">{{ user_profile.bio }}</textarea></p>
+    </div>
+
+    <!-- Include a form for location requests -->
+    <form method="post" action="{% url 'location_request' %}">
+        {% csrf_token %}
+        {{ location_form }}
+        <button type="submit">Request Nearby Locations</button>
+    </form>
+</div>
+{% endblock %}

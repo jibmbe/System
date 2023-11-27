@@ -1,0 +1,129 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <style>
+    body {
+      background: linear-gradient(135deg, #2e2e2e, #1a1a1a);
+      color: white;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .about-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .rounded-container {
+      background: rgba(40, 44, 52, 0.8);
+      border-radius: 10px;
+      padding: 20px;
+      width: 600px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .about-title {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .about-content {
+      line-height: 1.6;
+    }
+
+    .features-list {
+      margin-top: 20px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .feature-icon {
+      margin-right: 10px;
+      font-size: 24px;
+    }
+
+    .feature-text {
+      font-size: 18px;
+    }
+
+    .highlight {
+      color: #ff9900; /* Highlight color */
+      font-weight: bold;
+    }
+
+    /* Add animation effect */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Button styling */
+    .cta-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #ff9900;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    .cta-button:hover {
+      background-color: #e68000;
+    }
+
+    /* Emojis */
+    .emoji {
+      font-size: 24px;
+      margin-right: 5px;
+    }
+  </style>
+
+  <div class="about-container">
+    <div class="rounded-container">
+      <h2 class="about-title">About Jibmbe 🌟</h2>
+      <div class="about-content">
+        <p>Welcome to Jibmbe, your ultimate guide to discovering <span class="highlight">events</span> and <span class="highlight">locations</span> near you. Jibmbe is more than just a platform; it's your companion for exploring the world around you. 🚀</p>
+        <p>Discover exciting events happening in your city, from live performances to community gatherings. Jibmbe makes it easy for you to stay informed and connect with the vibrant happenings in your area. 🎉</p>
+        <p>Looking for a cozy cafe, a trendy restaurant, or a scenic park? Jibmbe has you covered. Explore nearby locations and find hidden gems that match your preferences. 🗺️</p>
+        <p>At Jibmbe, we believe in making every day an adventure. Join us in discovering the richness of your surroundings and making the most of every moment. Let's <span class="highlight">Jibmbe</span> together! 🌍</p>
+
+        <div class="features-list">
+          <div class="feature">
+            <span class="emoji">🔍</span>
+            <span class="feature-text">Search for events based on your interests and preferences.</span>
+          </div>
+          <div class="feature">
+            <span class="emoji">📍</span>
+            <span class="feature-text">Find and bookmark your favorite locations.</span>
+          </div>
+          <div class="feature">
+            <span class="emoji">🎨</span>
+            <span class="feature-text">Explore a variety of events and activities in your area.</span>
+          </div>
+          <div class="feature">
+            <span class="emoji">🤝</span>
+            <span class="feature-text">Stay connected with your local community and never miss out.</span>
+          </div>
+        </div>
+
+        <!-- Call-to-action button -->
+        <a href="{% url 'signup' %}" class="cta-button">Get Started 🚀</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

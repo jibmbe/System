@@ -1,0 +1,30 @@
+<!-- base.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jibmbe</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'Ianapp/style.css' %}">
+
+</head>
+<body>
+    <header>
+        <h1>Jibmbe</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'signup' %}">Create account</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                <!-- Add more navigation links as needed -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

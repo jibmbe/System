@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <style>
+    body {
+      background-color: black; /* Set the background color of the entire page to black */
+      color: white; /* Set the text color to white */
+    }
+
+    .signup-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .rounded-container {
+      background-color: #282c34; /* Use the same background color as the dashboard */
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .signup-form {
+      width: 100%;
+    }
+
+    .signup-form label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .signup-form input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      color: black; /* Set the text color inside the input fields to black */
+    }
+
+    .signup-form button {
+      background-color: orange; /* Set the button background color to orange */
+      color: white; /* Set the button text color to white */
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .signup-form button:hover {
+      background-color: #ff8c00; /* Use a slightly darker color on hover */
+    }
+  </style>
+
+  <div class="signup-container">
+    <div class="rounded-container">
+      <h2>Sign Up</h2>
+      <form method="post" action="{% url 'signup' %}" class="signup-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
+

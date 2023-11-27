@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <style>
+    body {
+      background: linear-gradient(135deg, #2e2e2e, #1a1a1a);
+      color: white;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .contact-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .rounded-container {
+      background: rgba(40, 44, 52, 0.8);
+      border-radius: 10px;
+      padding: 30px;
+      width: 70%; /* Adjusted width for a better fit */
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .contact-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .form-input {
+      margin-bottom: 20px; /* Increased margin for better spacing */
+      width: 100%;
+    }
+
+    .form-input input,
+    .form-input textarea {
+      padding: 15px; /* Adjusted padding for better comfort */
+      border: none;
+      border-radius: 5px;
+      background-color: #282c34;
+      color: white;
+      font-size: 16px;
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-input i {
+      margin-right: 10px;
+    }
+
+    .form-submit {
+      background-color: #ff9900;
+      color: white;
+      padding: 15px; /* Adjusted padding for better comfort */
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+      width: 100%;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease;
+    }
+
+    .form-submit:hover {
+      background-color: #e68000;
+    }
+
+    .submission-status {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #ff9900;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .contact-form {
+      animation: fadeIn 0.8s ease-in-out;
+    }
+  </style>
+
+  <div class="contact-container">
+    <div class="rounded-container">
+      <h2 class="contact-title">Contact Us 📬</h2>
+      <form class="contact-form" method="post" action="{% url 'contact' %}">
+        {% csrf_token %}
+        <div class="form-input">
+          <i class="fa fa-user"></i>
+          <input type="text" name="name" placeholder="Your Name" required>
+        </div>
+        <div class="form-input">
+          <i class="fa fa-envelope"></i>
+          <input type="email" name="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-input">
+          <i class="fa fa-pencil"></i>
+          <textarea name="message" placeholder="Your Message" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message</button>
+      </form>
+
+      {% if submission_status %}
+        <p class="submission-status {% if submission_status == 'success' %}success{% else %}error{% endif %}">
+          {{ submission_message }}
+        </p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

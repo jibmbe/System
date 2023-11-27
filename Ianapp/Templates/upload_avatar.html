@@ -1,0 +1,14 @@
+<!-- upload_avatar.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="form-container">
+        <h2>Upload Avatar</h2>
+        <form method="post" enctype="multipart/form-data" action="{% url 'upload_avatar' %}">
+            {% csrf_token %}
+            {{ avatar_form }}
+            <button type="submit">Upload Avatar</button>
+        </form>
+    </div>
+{% endblock %}

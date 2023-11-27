@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .location-request-container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      margin-top: 20px;
+      border: 2px solid #ff8c00;
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    button {
+      background-color: #ff8c00;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    #map {
+      height: 400px;
+      margin-top: 20px;
+      border: 2px solid #ff8c00;
+      border-radius: 10px;
+    }
+  </style>
+
+  <div class="location-request-container">
+    <h2>Location Request</h2>
+    <form method="post" action="{% url 'location_request' %}">
+      {% csrf_token %}
+      {{ location_form }}
+      <button type="submit">Request Location</button>
+    </form>
+
+    <div id="map"></div>
+
+    {% if nearby_data.events or nearby_data.other_data %}
+      <h3>Nearby Points of Interest:</h3>
+      <ul>
+        {% for event in nearby_data.events %}
+          <li>{{ event.name }} - {{ event.distance }} km away</li>
+        {% endfor %}
+        {% for place in nearby_data.other_data.nearby_places %}
+          <li>{{ place.name }} - {{ place.distance }} km away</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No nearby points of interest found.</p>
+    {% endif %}
+  </div>
+
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet' />
+  <script>
+    mapboxgl.accessToken = 'MAPBOX_ACCESS_TOKEN';
+
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [0, 0],  // Default center, will be updated based on user input
+      zoom: 2,         // Default zoom level
+    });
+
+    // Add a marker for the user's requested location
+    var marker = new mapboxgl.Marker()
+      .setLngLat([0, 0])  // Default location, will be updated based on user input
+      .addTo(map);
+
+    // Function to update the map based on user input
+    function updateMap(longitude, latitude) {
+      map.flyTo({
+        center: [longitude, latitude],
+        zoom: 14,  // Adjust zoom level as needed
+      });
+
+      // Update the marker position
+      marker.setLngLat([longitude, latitude]);
+    }
+
+    // Call the updateMap function with the user's requested location
+    updateMap({{ nearby_data.location.longitude }}, {{ nearby_data.location.latitude }});
+  </script>
+{% endblock %}
