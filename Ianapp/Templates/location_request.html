@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+
 {% block content %}
   <style>
     body {
@@ -66,7 +66,7 @@
   <script src='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js'></script>
   <link href='https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css' rel='stylesheet' />
   <script>
-    mapboxgl.accessToken = 'MAPBOX_ACCESS_TOKEN';
+    mapboxgl.accessToken = 'pk.eyJ1Ijoid2FnYXR1IiwiYSI6ImNscHByY3FrcDEydmcyaXBqdmEwcDl4b28ifQ.csOa8irCFS96L1-6vhAtFQ';
 
     var map = new mapboxgl.Map({
       container: 'map',
@@ -92,6 +92,20 @@
     }
 
     // Call the updateMap function with the user's requested location
-    updateMap({{ nearby_data.location.longitude }}, {{ nearby_data.location.latitude }});
+    {% if nearby_data.location %}
+      updateMap({{ nearby_data.location.longitude }}, {{ nearby_data.location.latitude }});
+    {% endif %}
+
+    // Listen for the form submission and update the map
+    document.querySelector('form').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      // Get the submitted latitude and longitude
+      var submittedLatitude = parseFloat(document.getElementById('id_latitude').value);
+      var submittedLongitude = parseFloat(document.getElementById('id_longitude').value);
+
+      // Update the map based on the submitted location
+      updateMap(submittedLongitude, submittedLatitude);
+    });
   </script>
 {% endblock %}

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-5i^h-r8%n^9d+-v6=wn43a9ut$ey4b0128s58b1q=$1yg_xh9a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1','localhost', '127.0.0.1:8000']
 
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_HTTPONLY = True
@@ -135,6 +135,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'Ianapp/static')]
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 # Security settings
+
+# settings.py
+
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

@@ -30,7 +30,7 @@ class LocationForm(forms.Form):
     longitude = forms.FloatField()
 
     # Ianapp/forms.py
-from django import forms
+
 
 class BioForm(forms.Form):
     bio = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))

@@ -1,30 +1,20 @@
-
-
-# Ianapp/views.py
-
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .forms import UserProfileForm, LocationRequestForm
-from .models import UserProfile
-from .models import Place,Event
-from math import radians, sin, cos, sqrt, atan2
-from .forms import AvatarForm, LocationForm, BioForm
-from Ianapp.forms import BioForm
+from django.test import RequestFactory
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login as auth_login
-from .forms import SignUpForm, LoginForm, BioForm
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User 
-from django.contrib import messages
-from django.contrib.auth import authenticate, login as auth_login
-from django.contrib.auth.views import LoginView
-from .forms import ContactForm
+
+from .forms import UserProfileForm, LocationRequestForm, AvatarForm, LocationForm, BioForm, ContactForm
+from .models import UserProfile, Place, Event
+from math import radians, sin, cos, sqrt, atan2
+from .forms import LocationRequestForm
+
+request_factory = RequestFactory()
 
 
+def get_user_id(request):
+    if request.user.is_authenticated:
+        return request.user.id
+    return None
 
-# views.py
-
-# views.py
 
 def location_request(request):
     if request.method == 'POST':
@@ -45,12 +35,12 @@ def location_request(request):
 
     return render(request, 'location_request.html', {'location_form': location_form})
 
-
 def get_live_events(latitude, longitude):
     # Your logic to fetch live events based on location
     # This can involve querying a database, calling an API, etc.
     live_events = [...]  # Replace with your actual logic
     return live_events
+
 
 def get_nearby_data(requested_lat, requested_lon):
     # Your logic here to fetch nearby places and live events from the database
@@ -90,18 +80,13 @@ def haversine(lat1, lon1, lat2, lon2):
     return distance
 
 
-from django.contrib.auth.forms import UserCreationForm
-
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             # Create the user
             user = form.save()
-            
             # Log in the user
-            login(request, user)
-            
             return redirect('dashboard')
     else:
         form = UserCreationForm()
@@ -109,69 +94,6 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
-
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
-
-def user_login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user:
-                auth_login(request, user)
-                messages.success(request, f"Welcome, {username}!")
-                return redirect('dashboard')
-            else:
-                messages.error(request, "Invalid login credentials.")
-    else:
-        form = LoginForm()
-    return render(request, 'login.html', {'form': form})
-
-class CustomLoginView(LoginView):
-    template_name = 'login.html'
-    form_class = LoginForm
-    redirect_authenticated_user = True
-
-    def form_valid(self, form):
-        messages.success(self.request, f"Welcome, {self.request.user}!")
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        messages.error(self.request, "Invalid login credentials.")
-        return super().form_invalid(form)
-
-
-@login_required(login_url='login')
-
-def dashboard(request):
-    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-    avatar_form = AvatarForm()
-    location_form = LocationForm()
-
-    context = {
-        'user_profile': user_profile,
-        'avatar_form': avatar_form,
-        'location_form': location_form,
-        # Add any other context variables needed for your dashboard
-    }
-
-    return render(request, 'dashboard.html', context)
-def about(request):
-    # Placeholder logic for the about view
-    context = {
-        'message': 'Welcome to the About page!',
-    }
-    return render(request, 'about.html', context)
-
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from .models import UserProfile
-from .forms import AvatarForm  # Import your actual form
-
-@login_required(login_url='login')
 
 def dashboard(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
@@ -190,8 +112,6 @@ def dashboard(request):
     return render(request, 'dashboard.html', context)
 
 
-
-@login_required
 def upload_avatar(request):
     user_profile = get_object_or_404(UserProfile, user=request.user)
 
@@ -204,10 +124,28 @@ def upload_avatar(request):
     avatar_form = UserProfileForm(instance=user_profile)
     return render(request, 'upload_avatar.html', {'avatar_form': avatar_form})
 
+
 def clear_avatar(request):
     # Your logic to clear the avatar
     return render(request, 'clear_avatar_template.html')
 
+# Ianapp/views.py
+from django.shortcuts import render
+
+def login_view(request):
+    # Your login view logic goes here
+    return render(request, 'login.html')  # Update with your actual login template
+
+def profile(request):
+    # Your view logic here
+    return render(request, 'Ianapp/profile.html')
+
+def about(request):
+    # Placeholder logic for the about view
+    context = {
+        'message': 'Welcome to the About page!',
+    }
+    return render(request, 'about.html', context)
 
 
 def contact(request):
@@ -219,13 +157,11 @@ def contact(request):
         if form.is_valid():
             # Process the form data
             # ...
-
             submission_status = 'success'
             submission_message = 'Your message was sent successfully!'
         else:
             submission_status = 'error'
             submission_message = 'Please correct the errors in the form.'
-
     else:
         form = ContactForm()
 

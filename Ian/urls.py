@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', dashboard, name='home'),
     path('Ianapp/', include('Ianapp.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     
 
 ]
